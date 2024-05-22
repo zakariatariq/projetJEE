@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <form method="post" th:action="@{/updateProduct}" th:object="${product}" id="updateProductForm">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+            <div class="invalid-feedback">Please provide a product name.</div>
+        </div>
+        <div class="mb-3">
+            <label for="ref" class="form-label">Product Ref</label>
+            <input type="text" class="form-control" id="ref" th:field="*{ref}" required>
+            <div class="invalid-feedback">Please provide a product reference.</div>
+        </div>
+        <div class="mb-3">
+            <label for="code" class="form-label">Product Code</label>
+            <input type="number" class="form-control" id="code" th:field="*{code}" required>
+            <div class="invalid-feedback">Please provide a product code.</div>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Production Date</label>
+            <input type="date" class="form-control" id="date" th:field="*{prodDate}" required>
+            <div class="invalid-feedback">Please provide a production date.</div>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Product Price</label>
+            <input type="number" class="form-control" id="price" th:field="*{price}" required min="50">
+            <div class="invalid-feedback">Please provide a product price (minimum 50).</div>
+        </div>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="save">Save changes</button>
+        <script>
+            document.getElementById('save').addEventListener('click',function ()
+            {
+                alert('Product Modified')
+            }   )                 </script>
+    </form>
+</div>
+
+<script>
+    // Example of form validation using Bootstrap's native JavaScript
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+</body>
+</html>
